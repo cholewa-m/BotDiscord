@@ -1,0 +1,1 @@
+File src/main/kotlin/com/example/**Application.kt** should be edited - assign your bot token to BOT_TOKEN value and id of your channel to CHANNEL_ID. 
