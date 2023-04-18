@@ -2,26 +2,34 @@ package com.example
 
 import com.jessecorbett.diskord.util.*
 import com.jessecorbett.diskord.api.channel.ChannelClient
+import com.jessecorbett.diskord.bot.bot
+import com.jessecorbett.diskord.bot.events
 import com.jessecorbett.diskord.internal.client.RestClient
-import kotlinx.coroutines.coroutineScope
-
+import kotlinx.coroutines.*
 
 private const val BOT_TOKEN = "your-bot-token"
-private const val CHANNEL_ID = "your-channel-id"
+private const val CHANNEL_ID = "channel-id"
 
+fun main() {
+    runBlocking {
+        val client = RestClient.default(BOT_TOKEN)
+        val channel = ChannelClient(CHANNEL_ID, client)
 
-suspend fun main(): Unit = coroutineScope {
+        launch {
+            bot(BOT_TOKEN) {
+                events {
+                    onMessageCreate { println("\nReceived Message - ${it.author.username}: ${it.content} \nSend message to your channel: " ) }
+                }
+            }
+        }
 
-    val client = RestClient.default(BOT_TOKEN)
-    val channel = ChannelClient(CHANNEL_ID, client)
+        println("You can now send and receive messages! ")
 
-    println("You can now send messages to your channel using your bot! ")
-
-    while(true) {
-        print("Enter your message: ")
-        val message: String = readLine() ?: ""
-        if (message.isNotBlank())
-            channel.sendMessage(message)
+        while (true) {
+            print("Send message to your channel: ")
+            val message: String = readLine() ?: ""
+            if (message.isNotBlank())
+                channel.sendMessage(message)
+        }
     }
-
 }
