@@ -27,4 +27,8 @@ dependencies {
     implementation("com.jessecorbett:diskord-bot:3.0.0")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
+    implementation("com.squareup.moshi:moshi:1.11.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.11.0")
+
 }
